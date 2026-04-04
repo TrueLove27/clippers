@@ -20,11 +20,13 @@ else:
 DEFAULTS: dict[str, Any] = {
     "groq_api_key": "",
     "model": "llama-3.3-70b-versatile",
-    "num_clips": 5,
-    "clip_duration_min": 30,
-    "clip_duration_max": 90,
+    "num_clips": 8,
+    "clip_duration_min": 15,
+    "clip_duration_max": 25,
     "caption_style": "neon",
-    "whisper_model": "large-v3",
+    "whisper_model": "whisper-large-v3",
+    "auto_captions": True,
+    "output_format": "vertical",  # vertical (9:16) or original
 }
 
 ENV_MAP = {

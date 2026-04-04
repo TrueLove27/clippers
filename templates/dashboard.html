@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard — Clippers</title>
+  <title>Clippers — AI Reel Generator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Syne:wght@500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -17,306 +17,216 @@
     <svg class="wave wave--2" viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,288L48,272C96,256,192,224,288,213.3C384,203,480,213,576,229.3C672,245,768,267,864,261.3C960,256,1056,224,1152,208C1248,192,1344,192,1392,192L1440,192L1440,320L0,320Z"/></svg>
   </div>
 
-  <!-- ===== Full-height sidebar: brand + nav + videos ===== -->
-  <aside class="sidenav glass" id="sidenav">
-
-    <!-- Brand -->
-    <a href="/dashboard" class="sidenav__brand">
+  <!-- ===== Top bar ===== -->
+  <header class="topbar glass">
+    <a href="/dashboard" class="topbar__brand">
       <span class="brand-script brand-script--sm">Clippers</span>
     </a>
-
-    <!-- Navigation -->
-    <nav class="sidenav__nav">
-      <button class="nav-item active" data-tab="download">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span>Download</span>
-      </button>
-      <button class="nav-item" data-tab="clip">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-        <span>Clip</span>
-      </button>
-      <button class="nav-item" data-tab="library">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        <span>Library</span>
-      </button>
-      <button class="nav-item nav-item--settings" id="openSettingsBtn">
+    <div class="topbar__right">
+      <button class="topbar__btn" id="openSettingsBtn" title="Settings">
         <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-        <span>Settings</span>
       </button>
-    </nav>
-
-    <div class="sidenav__divider"></div>
-
-    <!-- Curated videos -->
-    <p class="sidenav__label">Free Coding Videos</p>
-    <p class="sidenav__hint">Drag into download box</p>
-    <div class="sidenav__videos" id="videoList">
-
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=rfscVS0vtbw">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/rfscVS0vtbw/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">Python Full Course</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=PkZNo7MFNFg">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/PkZNo7MFNFg/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">JavaScript Full Course</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=mU6anWqZJcc">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/mU6anWqZJcc/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">HTML &amp; CSS Full Course</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=bMknfKXIFA8">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/bMknfKXIFA8/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">React Course 2024</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=RGOj5yH7evk">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/RGOj5yH7evk/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">Git &amp; GitHub</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=4JzDttgdILQ">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/4JzDttgdILQ/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">Creative Coding</p><p class="vid-card__ch">The Coding Train</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=IDDmrzzB14M">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/IDDmrzzB14M/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">CS50 Introduction</p><p class="vid-card__ch">Harvard CS50</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=o5t7PxRJSXk">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/o5t7PxRJSXk/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">p5.js Creative Coding</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=zJSY8tbf_ys">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/zJSY8tbf_ys/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">Node.js Full Course</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-      <div class="vid-card" draggable="true" data-url="https://www.youtube.com/watch?v=8hly31xKli0">
-        <img class="vid-card__thumb" src="https://img.youtube.com/vi/8hly31xKli0/mqdefault.jpg" alt="" loading="lazy">
-        <div class="vid-card__info"><p class="vid-card__title">Algorithms &amp; DS</p><p class="vid-card__ch">freeCodeCamp</p></div>
-      </div>
-
-    </div>
-
-    <!-- User + logout (bottom) -->
-    <div class="sidenav__footer">
-      <span class="sidenav__user">{{ user_name }}</span>
+      <span class="topbar__user">{{ user_name }}</span>
       <a href="/api/auth/logout" class="btn btn--xs btn--outline">Logout</a>
     </div>
-  </aside>
+  </header>
 
-  <!-- ===== Main content area (right of sidebar) ===== -->
-  <main class="dash-content fade-in-up">
+  <!-- ===== Main content ===== -->
+  <main class="main-centered fade-in-up">
 
-    <!-- TAB: Download -->
-    <section class="tab-panel active" id="panel-download">
-      <!-- Hero banner -->
-      <div class="panel-banner glass">
-        <div class="panel-banner__art" aria-hidden="true">
-          <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
-            <path d="M40,80 A28,28 0 0,1 44,18 A36,36 0 0,1 120,24 A24,24 0 0,1 120,80 Z" stroke="url(#db1)" stroke-width="2" fill="rgba(0,212,255,0.04)"/>
-            <line x1="80" y1="50" x2="80" y2="98" stroke="#00d4ff" stroke-width="2.5" opacity="0.6" stroke-linecap="round"/>
-            <polyline points="68,86 80,98 92,86" stroke="#00d4ff" stroke-width="2.5" fill="none" opacity="0.6" stroke-linecap="round"/>
-            <rect x="100" y="40" width="8" height="5" rx="1" fill="#7b2ff7" opacity="0.4"/>
-            <rect x="112" y="44" width="8" height="5" rx="1" fill="#00d4ff" opacity="0.3"/>
-            <rect x="106" y="50" width="8" height="5" rx="1" fill="#ff2d75" opacity="0.25"/>
-            <defs><linearGradient id="db1" x1="0" y1="0" x2="160" y2="120"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7b2ff7"/></linearGradient></defs>
-          </svg>
+    <!-- Phase 1: Hero + Input -->
+    <div id="phaseInput">
+      <section class="hero">
+        <span class="hero__badge">Free AI Reel Generator</span>
+        <h1 class="hero__heading">
+          Paste a link.<br>
+          <span class="gradient-text">Get reels with subtitles.</span>
+        </h1>
+        <p class="hero__sub">
+          Drop any YouTube video link. Clippers transcribes it, finds the best 15-20 second moments,
+          and creates vertical reels with animated captions — ready for Shorts, Reels &amp; TikTok.
+        </p>
+
+        <!-- Floating phone mockups -->
+        <div class="hero__phones" aria-hidden="true">
+          <div class="phone-mock phone-mock--1">
+            <div class="phone-mock__screen">
+              <div class="phone-mock__bar"></div>
+              <div class="phone-mock__play">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)"><polygon points="8,5 20,12 8,19"/></svg>
+              </div>
+              <div class="phone-mock__caption">Best moment of the day</div>
+            </div>
+          </div>
+          <div class="phone-mock phone-mock--2">
+            <div class="phone-mock__screen">
+              <div class="phone-mock__bar"></div>
+              <div class="phone-mock__play">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)"><polygon points="8,5 20,12 8,19"/></svg>
+              </div>
+              <div class="phone-mock__caption">This changes everything</div>
+            </div>
+          </div>
+          <div class="phone-mock phone-mock--3">
+            <div class="phone-mock__screen">
+              <div class="phone-mock__bar"></div>
+              <div class="phone-mock__play">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)"><polygon points="8,5 20,12 8,19"/></svg>
+              </div>
+              <div class="phone-mock__caption">You need to hear this</div>
+            </div>
+          </div>
         </div>
-        <div class="panel-banner__text">
-          <h2>Download Videos</h2>
-          <p>Paste YouTube URLs below or drag videos from the sidebar. Supports playlists, channels, and 1000+ sites via yt-dlp.</p>
+      </section>
+
+      <!-- URL input bar -->
+      <div class="input-bar glass" id="inputBar">
+        <div class="input-bar__icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         </div>
+        <input type="text" id="urlInput" class="input-bar__field" placeholder="Paste a YouTube link here..." autofocus>
+        <button class="input-bar__btn" id="generateBtn">
+          <span>Create Reels</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
       </div>
 
-      <div class="panel-card glass">
-        <textarea id="urlBox" class="url-input" rows="5" spellcheck="false" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.youtube.com/watch?v=...&#10;&#10;Drag videos from the sidebar or paste links here"></textarea>
-        <div class="row gap-md mt-md">
-          <label class="check-label"><input type="checkbox" id="playlistCheck"><span class="checkmark"></span> Treat first URL as full playlist</label>
+      <p class="input-hint">Works with any public YouTube video. Powered by Whisper AI + Groq Llama 3.3 + FFmpeg.</p>
+
+      <!-- Setup wizard (shown when no API key) -->
+      <div id="setupWizard" class="setup-wizard glass" style="display:none">
+        <div class="setup-wizard__icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
-        <div class="row gap-md mt-md">
-          <label class="field-label">Save to</label>
-          <input type="text" id="dlDir" class="text-input flex-1" value="{{ download_dir }}">
+        <h3>Quick Setup (30 seconds)</h3>
+        <p>To generate reels, you need a free Groq API key:</p>
+        <ol>
+          <li>Go to <a href="https://console.groq.com" target="_blank">console.groq.com</a> and sign up (free)</li>
+          <li>Create an API key from the dashboard</li>
+          <li>Paste it below:</li>
+        </ol>
+        <div class="setup-wizard__input-row">
+          <input type="password" id="setupApiKey" class="text-input" placeholder="gsk_...">
+          <button class="btn btn--primary btn--sm" id="setupSaveBtn">Save Key</button>
         </div>
-        <button id="dlBtn" class="btn btn--primary btn--lg mt-lg"><span class="btn__text">Download All</span><span class="btn__loader"></span></button>
-        <div id="dlProgress" class="progress-list"></div>
-        <pre id="dlLog" class="log-box"></pre>
+        <p class="setup-wizard__note">Your key is stored securely. Never sent anywhere except Groq's API.</p>
       </div>
+    </div>
 
-      <!-- Quick-stats strip -->
-      <div class="stats-strip">
-        <div class="stat-card glass">
-          <svg width="28" height="28" fill="none" stroke="#00d4ff" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <div><p class="stat-card__val" id="statDownloads">0</p><p class="stat-card__label">Downloads</p></div>
-        </div>
-        <div class="stat-card glass">
-          <svg width="28" height="28" fill="none" stroke="#7b2ff7" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-          <div><p class="stat-card__val" id="statClips">0</p><p class="stat-card__label">Clips made</p></div>
-        </div>
-        <div class="stat-card glass">
-          <svg width="28" height="28" fill="none" stroke="#ff2d75" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-          <div><p class="stat-card__val" id="statFiles">0</p><p class="stat-card__label">In library</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- TAB: Clip (AI-powered, OpusClip-style) -->
-    <section class="tab-panel" id="panel-clip">
-
-      <!-- Phase 1: Hero + Input (visible by default) -->
-      <div id="clipPhaseInput">
-        <div class="clip-hero" id="clipHero">
-          <div class="clip-hero__text">
-            <span class="clip-hero__badge">AI-Powered Video Clipping</span>
-            <h1 class="clip-hero__heading">1 long video,<br><span class="gradient-text">multiple viral clips.</span></h1>
-            <p class="clip-hero__sub">Drop a YouTube link below. Our AI transcribes the video, finds the most engaging moments, and extracts ready-to-post clips with animated captions — all for free.</p>
-            <div class="clip-hero__trust">
-              <svg class="clip-hero__stars" width="80" height="16" viewBox="0 0 80 16"><defs><linearGradient id="starG"><stop offset="0%" stop-color="#00d4ff"/><stop offset="100%" stop-color="#7b2ff7"/></linearGradient></defs>
-                <polygon points="8,1 10,6 16,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0,6 6,6" fill="url(#starG)"/>
-                <polygon points="24,1 26,6 32,6 27,9.5 29,15 24,11.5 19,15 21,9.5 16,6 22,6" fill="url(#starG)"/>
-                <polygon points="40,1 42,6 48,6 43,9.5 45,15 40,11.5 35,15 37,9.5 32,6 38,6" fill="url(#starG)"/>
-                <polygon points="56,1 58,6 64,6 59,9.5 61,15 56,11.5 51,15 53,9.5 48,6 54,6" fill="url(#starG)"/>
-                <polygon points="72,1 74,6 80,6 75,9.5 77,15 72,11.5 67,15 69,9.5 64,6 70,6" fill="url(#starG)"/>
-              </svg>
-              <span>Whisper AI + Groq Llama 3.3 + FFmpeg</span>
-            </div>
+    <!-- Phase 2: Processing stepper -->
+    <div id="phaseProcessing" style="display:none">
+      <div class="ai-stepper glass">
+        <h2 class="ai-stepper__title">Generating your reels...</h2>
+        <div class="ai-stepper__step" id="aiStep1">
+          <div class="ai-stepper__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           </div>
-          <div class="clip-hero__collage" aria-hidden="true">
-            <div class="collage-card collage-card--1 glass">
-              <svg width="38" height="38" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#ff2d75" stroke-width="1.5" opacity="0.5"/><polygon points="10,7 18,12 10,17" fill="#ff2d75" opacity="0.7"/></svg>
-            </div>
-            <div class="collage-card collage-card--2 glass">
-              <svg width="52" height="52" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="#00d4ff" stroke-width="1.3" opacity="0.5"/><polygon points="9,8 17,12 9,16" fill="#00d4ff" opacity="0.6"/></svg>
-            </div>
-            <div class="collage-card collage-card--3 glass">
-              <svg width="44" height="44" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#7b2ff7" stroke-width="1.4" opacity="0.5"/><polygon points="10,8 16,12 10,16" fill="#7b2ff7" opacity="0.6"/></svg>
-            </div>
-            <div class="collage-card collage-card--phone glass">
-              <svg width="40" height="68" viewBox="0 0 40 68" fill="none">
-                <rect x="2" y="2" width="36" height="64" rx="8" stroke="#00d4ff" stroke-width="1.3" opacity="0.4"/>
-                <rect x="6" y="10" width="28" height="42" rx="2" fill="rgba(0,212,255,0.04)"/>
-                <polygon points="16,24 28,31 16,38" fill="#00d4ff" opacity="0.5"/>
-                <rect x="14" y="56" width="12" height="3" rx="1.5" fill="rgba(255,255,255,0.1)"/>
-              </svg>
-            </div>
-            <div class="collage-card collage-card--get glass">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 6l12 12M6 6h10M6 6v10"/></svg>
-              <span>Get Clips</span>
-            </div>
+          <div class="ai-stepper__info">
+            <p class="ai-stepper__label">Downloading Video</p>
+            <p class="ai-stepper__desc" id="aiMsg1">Fetching from YouTube...</p>
+          </div>
+          <div class="ai-stepper__check">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
         </div>
-
-        <!-- URL input bar -->
-        <div class="clip-input-bar glass" id="clipInputBar">
-          <div class="clip-input-bar__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <div class="ai-stepper__connector"></div>
+        <div class="ai-stepper__step" id="aiStep2">
+          <div class="ai-stepper__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           </div>
-          <input type="text" id="clipInput" class="clip-input-bar__field" placeholder="Drop a YouTube video link...">
-          <button class="clip-input-bar__btn" id="clipInputBtn">
-            <span>Generate Clips</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
+          <div class="ai-stepper__info">
+            <p class="ai-stepper__label">Transcribing Audio</p>
+            <p class="ai-stepper__desc" id="aiMsg2">Whisper AI speech-to-text...</p>
+          </div>
+          <div class="ai-stepper__check">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
         </div>
-
-        <!-- Setup wizard (shown when no API key) -->
-        <div id="clipSetupWizard" class="setup-wizard glass" style="display:none">
-          <div class="setup-wizard__icon">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="1.5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <div class="ai-stepper__connector"></div>
+        <div class="ai-stepper__step" id="aiStep3">
+          <div class="ai-stepper__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           </div>
-          <h3>Quick Setup Required</h3>
-          <p>To use AI clipping, you need a free Groq API key. It takes 30 seconds:</p>
-          <ol>
-            <li>Go to <a href="https://console.groq.com" target="_blank">console.groq.com</a> and sign up (free)</li>
-            <li>Create an API key from the dashboard</li>
-            <li>Paste it below:</li>
-          </ol>
-          <div class="setup-wizard__input-row">
-            <input type="password" id="setupApiKey" class="text-input" placeholder="gsk_...">
-            <button class="btn btn--primary btn--sm" id="setupSaveBtn">Save Key</button>
+          <div class="ai-stepper__info">
+            <p class="ai-stepper__label">AI Finding Best Moments</p>
+            <p class="ai-stepper__desc" id="aiMsg3">Llama 3.3 analyzing transcript...</p>
           </div>
-          <p class="setup-wizard__note">Your key is stored locally. Never sent anywhere except Groq.</p>
+          <div class="ai-stepper__check">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ai-stepper__connector"></div>
+        <div class="ai-stepper__step" id="aiStep4">
+          <div class="ai-stepper__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+          </div>
+          <div class="ai-stepper__info">
+            <p class="ai-stepper__label">Extracting &amp; Captioning</p>
+            <p class="ai-stepper__desc" id="aiMsg4">Cutting clips &amp; burning subtitles...</p>
+          </div>
+          <div class="ai-stepper__check">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ai-stepper__connector"></div>
+        <div class="ai-stepper__step" id="aiStep5">
+          <div class="ai-stepper__icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          </div>
+          <div class="ai-stepper__info">
+            <p class="ai-stepper__label">Adding Animated Subtitles</p>
+            <p class="ai-stepper__desc" id="aiMsg5">Burning captions into vertical format...</p>
+          </div>
+          <div class="ai-stepper__check">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="ai-stepper__progress">
+          <div class="ai-stepper__bar"><div class="ai-stepper__bar-fill" id="progressFill"></div></div>
+          <span class="ai-stepper__pct" id="progressPct">0%</span>
         </div>
       </div>
+    </div>
 
-      <!-- Phase 2: Processing stepper (hidden by default) -->
-      <div id="clipPhaseProcessing" style="display:none">
-        <div class="ai-stepper glass">
-          <div class="ai-stepper__step" id="aiStep1">
-            <div class="ai-stepper__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            </div>
-            <div class="ai-stepper__info">
-              <p class="ai-stepper__label">Downloading Video</p>
-              <p class="ai-stepper__desc" id="aiStepMsg1">Fetching from YouTube...</p>
-            </div>
-            <div class="ai-stepper__check">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-          </div>
-          <div class="ai-stepper__connector"></div>
-          <div class="ai-stepper__step" id="aiStep2">
-            <div class="ai-stepper__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-            </div>
-            <div class="ai-stepper__info">
-              <p class="ai-stepper__label">Transcribing Audio</p>
-              <p class="ai-stepper__desc" id="aiStepMsg2">Whisper AI speech-to-text...</p>
-            </div>
-            <div class="ai-stepper__check">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-          </div>
-          <div class="ai-stepper__connector"></div>
-          <div class="ai-stepper__step" id="aiStep3">
-            <div class="ai-stepper__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-            </div>
-            <div class="ai-stepper__info">
-              <p class="ai-stepper__label">AI Finding Best Moments</p>
-              <p class="ai-stepper__desc" id="aiStepMsg3">Llama 3.3 analyzing transcript...</p>
-            </div>
-            <div class="ai-stepper__check">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-          </div>
-          <div class="ai-stepper__connector"></div>
-          <div class="ai-stepper__step" id="aiStep4">
-            <div class="ai-stepper__icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
-            </div>
-            <div class="ai-stepper__info">
-              <p class="ai-stepper__label">Extracting Clips</p>
-              <p class="ai-stepper__desc" id="aiStepMsg4">FFmpeg cutting segments...</p>
-            </div>
-            <div class="ai-stepper__check">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-          </div>
-          <div class="ai-stepper__progress">
-            <div class="ai-stepper__bar"><div class="ai-stepper__bar-fill" id="aiProgressFill"></div></div>
-            <span class="ai-stepper__pct" id="aiProgressPct">0%</span>
-          </div>
+    <!-- Phase 3: Results -->
+    <div id="phaseResults" style="display:none">
+      <div class="results-header">
+        <div>
+          <h2 class="results-header__title">Your Reels</h2>
+          <p class="results-header__sub">Vertical 9:16 with animated subtitles. Ready to post.</p>
         </div>
+        <button class="btn btn--primary btn--sm" id="newVideoBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Video
+        </button>
       </div>
+      <div class="reels-grid" id="reelsGrid"></div>
+    </div>
 
-      <!-- Phase 3: Results grid (hidden by default) -->
-      <div id="clipPhaseResults" style="display:none">
-        <div class="results-header">
-          <h2 class="results-header__title">Your AI Clips</h2>
-          <div class="results-header__actions">
-            <button class="btn btn--sm btn--outline" id="aiNewClipBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              New Video
-            </button>
-          </div>
+  </main>
+
+  <!-- Settings modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-sheet" style="max-width:500px;">
+      <button class="modal-close" id="settingsClose">&times;</button>
+      <h2 class="modal-title">Settings</h2>
+      <div class="settings-form">
+        <div class="settings-group">
+          <label class="field-label">Groq API Key</label>
+          <input type="password" id="setApiKey" class="text-input" placeholder="gsk_...">
+          <p class="settings-hint">Free at <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
         </div>
-        <div class="clip-results-grid" id="clipResultsGrid"></div>
-      </div>
-
-      <!-- Caption editor modal -->
-      <div class="modal-overlay" id="captionModal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet" style="max-width:520px;">
-          <button class="modal-close" id="captionModalClose">&times;</button>
-          <h2 style="font-family:var(--font-head);font-size:1.2rem;margin-bottom:1.2rem;text-align:center;letter-spacing:0.04em">Add Captions</h2>
-          <p class="muted" style="text-align:center;margin-bottom:1.2rem" id="captionClipTitle"></p>
+        <div class="settings-group">
+          <label class="field-label">LLM Model</label>
+          <select id="setModel" class="text-input">
+            <option value="llama-3.3-70b-versatile">Llama 3.3 70B (best)</option>
+            <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout (fast)</option>
+            <option value="llama-3.1-8b-instant">Llama 3.1 8B (fastest)</option>
+          </select>
+        </div>
+        <div class="settings-group">
+          <label class="field-label">Caption Style</label>
           <div class="caption-styles" id="captionStylePicker">
             <button class="caption-style-opt active" data-style="neon">
               <span class="caption-style-opt__preview" style="color:#00d4ff">Aa</span>
@@ -330,120 +240,50 @@
               <span class="caption-style-opt__preview" style="color:#ff2d75">Aa</span>
               <span>Bold</span>
             </button>
-          </div>
-          <button class="btn btn--primary btn--lg mt-lg" style="width:100%" id="captionBurnBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
-            Burn Captions into Video
-          </button>
-          <p id="captionStatus" class="status-msg" style="text-align:center"></p>
-        </div>
-      </div>
-
-      <!-- Settings modal -->
-      <div class="modal-overlay" id="settingsModal">
-        <div class="modal-backdrop"></div>
-        <div class="modal-sheet" style="max-width:500px;">
-          <button class="modal-close" id="settingsModalClose">&times;</button>
-          <h2 style="font-family:var(--font-head);font-size:1.2rem;margin-bottom:1.4rem;text-align:center;letter-spacing:0.04em">AI Settings</h2>
-          <div class="settings-form">
-            <div class="settings-group">
-              <label class="field-label">Groq API Key</label>
-              <input type="password" id="setApiKey" class="text-input" placeholder="gsk_...">
-              <p class="settings-hint">Free at <a href="https://console.groq.com" target="_blank">console.groq.com</a></p>
-            </div>
-            <div class="settings-group">
-              <label class="field-label">Model</label>
-              <select id="setModel" class="text-input">
-                <option value="llama-3.3-70b-versatile">Llama 3.3 70B (best quality)</option>
-                <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout 17B (faster)</option>
-                <option value="llama-3.1-8b-instant">Llama 3.1 8B (fastest)</option>
-              </select>
-            </div>
-            <div class="settings-row">
-              <div class="settings-group">
-                <label class="field-label">Number of clips</label>
-                <input type="number" id="setNumClips" class="text-input" value="5" min="1" max="15">
-              </div>
-              <div class="settings-group">
-                <label class="field-label">Min duration (s)</label>
-                <input type="number" id="setMinDur" class="text-input" value="30" min="10" max="300">
-              </div>
-              <div class="settings-group">
-                <label class="field-label">Max duration (s)</label>
-                <input type="number" id="setMaxDur" class="text-input" value="90" min="15" max="600">
-              </div>
-            </div>
-            <button class="btn btn--primary btn--lg mt-lg" style="width:100%" id="settingsSaveBtn">Save Settings</button>
-            <p id="settingsStatus" class="status-msg" style="text-align:center"></p>
+            <button class="caption-style-opt" data-style="minimal">
+              <span class="caption-style-opt__preview" style="color:#00ff00">Aa</span>
+              <span>Minimal</span>
+            </button>
           </div>
         </div>
-      </div>
-
-    </section>
-
-    <!-- TAB: Library -->
-    <section class="tab-panel" id="panel-library">
-      <div class="panel-banner glass">
-        <div class="panel-banner__art" aria-hidden="true">
-          <svg width="160" height="120" viewBox="0 0 160 120" fill="none">
-            <line x1="10" y1="100" x2="150" y2="100" stroke="rgba(0,212,255,0.25)" stroke-width="2"/>
-            <rect x="16" y="30" width="34" height="68" rx="5" stroke="#00d4ff" stroke-width="1.5" fill="rgba(0,212,255,0.04)" opacity="0.6"/>
-            <polygon points="26,54 42,64 26,74" fill="#00d4ff" opacity="0.3"/>
-            <rect x="56" y="40" width="34" height="58" rx="5" stroke="#7b2ff7" stroke-width="1.5" fill="rgba(123,47,247,0.04)" opacity="0.5"/>
-            <polygon points="66,60 82,69 66,78" fill="#7b2ff7" opacity="0.25"/>
-            <rect x="96" y="24" width="34" height="74" rx="5" stroke="#ff2d75" stroke-width="1.5" fill="rgba(255,45,117,0.03)" opacity="0.45"/>
-            <polygon points="106,52 122,62 106,72" fill="#ff2d75" opacity="0.2"/>
-            <path d="M138,58 L138,48 L148,48 L152,52 L158,52 L158,90 L138,90 Z" stroke="#7b2ff7" stroke-width="1.2" fill="rgba(123,47,247,0.03)" opacity="0.35"/>
-          </svg>
+        <div class="settings-row">
+          <div class="settings-group">
+            <label class="field-label">Number of reels</label>
+            <input type="number" id="setNumClips" class="text-input" value="8" min="1" max="15">
+          </div>
+          <div class="settings-group">
+            <label class="field-label">Min duration (s)</label>
+            <input type="number" id="setMinDur" class="text-input" value="15" min="5" max="120">
+          </div>
+          <div class="settings-group">
+            <label class="field-label">Max duration (s)</label>
+            <input type="number" id="setMaxDur" class="text-input" value="25" min="10" max="120">
+          </div>
         </div>
-        <div class="panel-banner__text">
-          <h2>Your Library</h2>
-          <p>All your downloaded videos and created clips in one place. Copy paths to use them in the clip tool or share them.</p>
-        </div>
-      </div>
-
-      <div class="panel-card glass">
-        <button id="refreshLib" class="btn btn--sm btn--outline mb-md">Refresh</button>
-        <div id="fileGrid" class="file-grid"></div>
-        <div id="libEmpty" class="empty-state" style="display:none">
-          <svg width="140" height="110" viewBox="0 0 140 110" fill="none" aria-hidden="true">
-            <rect x="20" y="30" width="100" height="65" rx="8" stroke="rgba(0,212,255,0.2)" stroke-width="1.5" fill="rgba(0,212,255,0.02)" stroke-dasharray="6,4"/>
-            <path d="M20,48 L20,38 L44,38 L50,46 L90,46" stroke="rgba(0,212,255,0.18)" stroke-width="1.5" fill="none"/>
-            <circle cx="70" cy="68" r="16" stroke="rgba(123,47,247,0.2)" stroke-width="1.5" fill="none"/>
-            <polygon points="64,60 80,68 64,76" fill="rgba(123,47,247,0.18)"/>
-            <circle cx="40" cy="18" r="4" fill="rgba(0,212,255,0.18)"/><line x1="40" y1="22" x2="40" y2="30" stroke="rgba(0,212,255,0.12)" stroke-width="1" stroke-dasharray="2,2"/>
-            <circle cx="70" cy="10" r="4" fill="rgba(123,47,247,0.18)"/><line x1="70" y1="14" x2="70" y2="30" stroke="rgba(123,47,247,0.12)" stroke-width="1" stroke-dasharray="2,2"/>
-            <circle cx="100" cy="16" r="4" fill="rgba(255,45,117,0.14)"/><line x1="100" y1="20" x2="100" y2="30" stroke="rgba(255,45,117,0.1)" stroke-width="1" stroke-dasharray="2,2"/>
-          </svg>
-          <p>No video files found yet.<br>Download or clip something first.</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- Floating bubble video player -->
-  <div class="bubble-player" id="bubblePlayer">
-    <div class="bubble-player__bar" id="bubbleDragBar">
-      <span class="bubble-player__title" id="bubbleTitle">Now playing</span>
-      <div class="bubble-player__actions">
-        <button class="bubble-player__btn" id="bubbleMin" title="Minimize">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        </button>
-        <button class="bubble-player__btn" id="bubbleClose" title="Close">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
+        <button class="btn btn--primary btn--lg mt-lg" style="width:100%" id="settingsSaveBtn">Save Settings</button>
+        <p id="settingsStatus" class="status-msg" style="text-align:center"></p>
       </div>
     </div>
-    <div class="bubble-player__body" id="bubbleBody">
-      <video class="bubble-player__video" id="bubbleVideo" controls></video>
-    </div>
-    <div class="bubble-player__mini" id="bubbleMiniView" style="display:none">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2"><polygon points="5 3 19 12 5 21"/></svg>
+  </div>
+
+  <!-- Video preview modal -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-sheet modal-sheet--preview">
+      <button class="modal-close" id="previewClose">&times;</button>
+      <video class="preview-video" id="previewVideo" controls></video>
+      <div class="preview-info">
+        <h3 id="previewTitle"></h3>
+        <p id="previewSummary"></p>
+        <a class="btn btn--primary btn--sm" id="previewDownload" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Reel
+        </a>
+      </div>
     </div>
   </div>
 
   <script src="{{ url_for('static', filename='js/particles.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/timeDial.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <script>initParticles('particleCanvas', { density: 40, speed: 0.2, linkDist: 120, mouseRadius: 100, opacity: 0.25 });</script>
 </body>
