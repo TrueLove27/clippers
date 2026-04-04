@@ -50,10 +50,17 @@ DOWNLOAD_DIR = os.path.join(WORK_DIR, "downloads")
 REELS_DIR = os.path.join(WORK_DIR, "reels")
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", os.urandom(24).hex())
+app.secret_key = os.environ.get("SECRET_KEY", "clippers-dev-key-change-in-prod")
 
 login_manager = LoginManager(app)
 login_manager.login_view = "landing"
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    if request.path.startswith("/api/"):
+        return jsonify(ok=False, error="Not authenticated."), 401
+    return redirect(url_for("landing"))
 
 db.init_db()
 os.makedirs(DOWNLOAD_DIR, exist_ok=True)
