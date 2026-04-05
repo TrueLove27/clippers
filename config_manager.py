@@ -1,6 +1,7 @@
 """Read and write config for AI settings.
 
-On Render / production the config file lives under /tmp (ephemeral).
+On Linux (Render) the config file lives under /tmp.
+On Windows (local dev) it lives next to the source.
 Environment variables always override file values.
 """
 
@@ -10,12 +11,13 @@ import json
 import os
 from typing import Any
 
-_ON_RENDER = bool(os.environ.get("RENDER"))
+_HERE = os.path.dirname(os.path.abspath(__file__))
 
-if _ON_RENDER:
-    CONFIG_PATH = "/tmp/clippers_config.json"
+if os.name == "nt":
+    CONFIG_PATH = os.path.join(_HERE, "config.json")
 else:
-    CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
+    os.makedirs("/tmp/clippers", exist_ok=True)
+    CONFIG_PATH = "/tmp/clippers/config.json"
 
 DEFAULTS: dict[str, Any] = {
     "groq_api_key": "",
@@ -26,7 +28,7 @@ DEFAULTS: dict[str, Any] = {
     "caption_style": "neon",
     "whisper_model": "whisper-large-v3",
     "auto_captions": True,
-    "output_format": "vertical",  # vertical (9:16) or original
+    "output_format": "vertical",
 }
 
 ENV_MAP = {

@@ -7,11 +7,15 @@ import sqlite3
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-_ON_RENDER = bool(os.environ.get("RENDER"))
-if _ON_RENDER:
-    DB_PATH = "/tmp/clippers_users.db"
+_HERE = os.path.dirname(os.path.abspath(__file__))
+
+# On Linux (Render), use /tmp so we can always write.
+# On Windows (local dev), use the project directory.
+if os.name == "nt":
+    DB_PATH = os.path.join(_HERE, "users.db")
 else:
-    DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "users.db")
+    os.makedirs("/tmp/clippers", exist_ok=True)
+    DB_PATH = "/tmp/clippers/users.db"
 
 
 def _conn() -> sqlite3.Connection:
@@ -21,19 +25,22 @@ def _conn() -> sqlite3.Connection:
 
 
 def init_db() -> None:
-    with _conn() as c:
-        c.execute(
-            """
-            CREATE TABLE IF NOT EXISTS users (
-                id            INTEGER PRIMARY KEY AUTOINCREMENT,
-                email         TEXT    UNIQUE NOT NULL,
-                name          TEXT    NOT NULL,
-                password_hash TEXT,
-                google_id     TEXT,
-                created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    try:
+        with _conn() as c:
+            c.execute(
+                """
+                CREATE TABLE IF NOT EXISTS users (
+                    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+                    email         TEXT    UNIQUE NOT NULL,
+                    name          TEXT    NOT NULL,
+                    password_hash TEXT,
+                    google_id     TEXT,
+                    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+                """
             )
-            """
-        )
+    except Exception as e:
+        print(f" ! DB init error: {e}")
 
 
 def create_user(
@@ -47,6 +54,9 @@ def create_user(
             )
             return get_user_by_email(email)
     except sqlite3.IntegrityError:
+        return None
+    except Exception as e:
+        print(f" ! DB create_user error: {e}")
         return None
 
 

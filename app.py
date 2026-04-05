@@ -38,13 +38,12 @@ from captioner import burn_captions
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-_ON_RENDER = bool(os.environ.get("RENDER"))
 GOOGLE_CLIENT_ID: str | None = os.environ.get("GOOGLE_CLIENT_ID")
 
-if _ON_RENDER:
-    WORK_DIR = "/tmp/clippers"
-else:
+if os.name == "nt":
     WORK_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_output")
+else:
+    WORK_DIR = "/tmp/clippers"
 
 DOWNLOAD_DIR = os.path.join(WORK_DIR, "downloads")
 REELS_DIR = os.path.join(WORK_DIR, "reels")
