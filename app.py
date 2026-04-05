@@ -10,6 +10,7 @@ from __future__ import annotations
 import os
 import threading
 import uuid
+import time
 
 from flask import (
     Flask,
@@ -93,20 +94,35 @@ def load_user(uid: str):
 
 
 # ---------------------------------------------------------------------------
-# In-memory task store
+# File-based task store (works across multiple gunicorn workers)
 # ---------------------------------------------------------------------------
-_tasks: dict[str, dict] = {}
-_lock = threading.Lock()
+import json as _json
+
+_TASK_DIR = os.path.join(WORK_DIR, "tasks")
+os.makedirs(_TASK_DIR, exist_ok=True)
+
+
+def _task_path(tid: str) -> str:
+    return os.path.join(_TASK_DIR, tid + ".json")
 
 
 def _set_task(tid: str, data: dict):
-    with _lock:
-        _tasks[tid] = data
+    try:
+        with open(_task_path(tid), "w") as f:
+            _json.dump(data, f)
+    except Exception:
+        pass
 
 
 def _get_task(tid: str) -> dict | None:
-    with _lock:
-        return _tasks.get(tid)
+    p = _task_path(tid)
+    if not os.path.isfile(p):
+        return None
+    try:
+        with open(p, "r") as f:
+            return _json.load(f)
+    except Exception:
+        return None
 
 
 def _update_msg(tid: str, msg: str):
@@ -471,6 +487,9 @@ def start_generate():
 @login_required
 def generation_progress(tid: str):
     task = _get_task(tid)
+    if not task:
+        time.sleep(0.5)
+        task = _get_task(tid)
     if not task:
         return jsonify(ok=False, error="Unknown task."), 404
     return jsonify(ok=True, **task)
